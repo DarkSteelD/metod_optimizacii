@@ -9,16 +9,11 @@ def dichotomy(f, a, b, tol=1e-3, delta=1e-5):
     y = f(x)
     plt.plot(x, y, label='f(x)', color='red',zorder=-1)
     while (b - a) > tol:
-        print(a)
-        print(b)
         midpoint = (a + b)
         x1 = (midpoint - delta)/2
         x2 = (midpoint + delta)/2
         f_x1 = f(x1)
         f_x2 = f(x2)
-        print(x1)
-        print(x2)
-        print(str(f_x1) + " " + str(f_x2))
         x_p.extend([x1, x2])
         y_p.extend([f_x1, f_x2])
         
