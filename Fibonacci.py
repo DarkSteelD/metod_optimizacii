@@ -1,46 +1,51 @@
 import numpy as np
 import matplotlib.pyplot as plt
-fib = [0, 1, 1]
-def FibCreate(n):
-    for i in range(len(fib), n + 1):
-        fib.append(fib[-1] + fib[-2])
-def fibonacci_search(f, a, b, n):
-    FibCreate(n)
-    x_p, y_p = [], []
-    x_p.extend([a,b])
-    y_p.extend([f(a),f(b)])
-    x = np.linspace(a, b, 400)    
+
+def fibonacci(n):
+    fib_sequence = [0, 1]
+    for i in range(2, n + 1):
+        fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
+    return fib_sequence
+
+def fibonacci_search(f, a, b, epsilon):
+    L = b - a
+    fib_sequence = fibonacci(100)  #
+    N = next(i for i, v in enumerate(fib_sequence) if v >= L / epsilon) - 1
+    x = np.linspace(a, b, 400)
     plt.figure(figsize=(8, 6))
-    y = f(x)
-    plt.plot(x, y, label='f(x)', color='red',zorder=-1)
-    for k in range(n - 1):
-        
-        l = a + (fib[n - k - 2] / fib[n - k]) * (b - a)
-        m = a + (fib[n - k - 1] / fib[n - k]) * (b - a)
-        
-        if f(l) > f(m):
-            a = l
-            x_p.extend([a])
-            y_p.extend([f(a)])
+    plt.plot(x, f(x), label='f(x)', color='red')
+    y = a + (fib_sequence[N - 2] / fib_sequence[N]) * (b - a)
+    z = a + (fib_sequence[N - 1] / fib_sequence[N]) * (b - a)
+    x_p, y_p = [y, z], [f(y), f(z)]
+    print(1/fib_sequence[len(fib_sequence)-1])
+    for k in range(1, N - 2):
+        if f(y) > f(z):
+            a = y
+            y = z
+            z = a + (fib_sequence[N - k - 1] / fib_sequence[N - k]) * (b - a)
         else:
-            b = m
-            x_p.extend([b])
-            y_p.extend([f(b)])    
+            b = z
+            z = y
+            y = a + (fib_sequence[N - k - 2] / fib_sequence[N - k]) * (b - a)
+        x_p.append((a + b) / 2)
+        y_p.append(f((a + b) / 2))
+    
     plt.scatter(x_p, y_p, color='black', label='Точки сходимости')
-    plt.scatter((a + b) / 2, f((a + b) / 2), color='blue', s=100, label='Точка минимума', zorder=2)
+    plt.scatter((a + b) / 2, f((a + b) / 2), color='blue', s=100, label='Точка минимума')
     plt.xlabel('x')
     plt.ylabel('f(x)')
-    plt.title('Метод Фибонначи')
+    plt.title('Метод Фибоначчи')
     plt.legend()
     plt.grid(True)
     plt.show()
+
     return (a + b) / 2
 
 def f(x):
     return x**2 + 4*x + 6
 
 a, b = -4, 6
-n = 24       
+epsilon = 0.05
 
-min_point = fibonacci_search(f, a, b, n)
+min_point = fibonacci_search(f, a, b, epsilon)
 print(f"Минимум функции находится в точке: {min_point:.5f}, значение функции в этой точке: {f(min_point):.5f}")
