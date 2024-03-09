@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
 def dichotomy(f, a, b, tol=1e-3, delta=1e-5):
+    counter = 0
     x_p = []
     y_p = []
     x = np.linspace(a, b, 400)    
@@ -16,7 +16,7 @@ def dichotomy(f, a, b, tol=1e-3, delta=1e-5):
         f_x2 = f(x2)
         x_p.extend([x1, x2])
         y_p.extend([f_x1, f_x2])
-        
+        counter+=1
         if f_x1 < f_x2:
             b = x2
         else:
@@ -30,7 +30,8 @@ def dichotomy(f, a, b, tol=1e-3, delta=1e-5):
     plt.legend()
     plt.grid(True)
     plt.show()
-    
+    print(counter)
+    print(1/2**(counter/2))
     return min_p
 
 def f(x):
