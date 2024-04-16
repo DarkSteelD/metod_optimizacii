@@ -9,13 +9,22 @@ def fibonacci(n):
 
 def fibonacci_search(f, a, b, epsilon):
     L = b - a
-    fib_sequence = fibonacci(100)  #
+    fib_sequence = fibonacci(100)  
     N = next(i for i, v in enumerate(fib_sequence) if v >= L / epsilon) - 1
+    print(N)
     x = np.linspace(a, b, 400)
     plt.figure(figsize=(8, 6))
     plt.plot(x, f(x), label='f(x)', color='red')
     y = a + (fib_sequence[N - 2] / fib_sequence[N]) * (b - a)
     z = a + (fib_sequence[N - 1] / fib_sequence[N]) * (b - a)
+    print(a)
+    print(b)
+    print(fib_sequence[N - 2])
+    print(fib_sequence[N - 1])
+    print(y)
+    print(z)
+    print(f(y))
+    print(f(z))
     x_p, y_p = [y, z], [f(y), f(z)]
     print(1/fib_sequence[len(fib_sequence)-1])
     for k in range(1, N - 2):
@@ -23,10 +32,26 @@ def fibonacci_search(f, a, b, epsilon):
             a = y
             y = z
             z = a + (fib_sequence[N - k - 1] / fib_sequence[N - k]) * (b - a)
+            print(a)
+            print(b)
+            print(fib_sequence[N - k - 1])
+            print(fib_sequence[N - k])
+            print(y)
+            print(z)
+            print(f(y))
+            print(f(z))
         else:
             b = z
             z = y
             y = a + (fib_sequence[N - k - 2] / fib_sequence[N - k]) * (b - a)
+            print(a)
+            print(b)
+            print(fib_sequence[N - k -  2])
+            print(fib_sequence[N - k])
+            print(y)
+            print(z)
+            print(f(y))
+            print(f(z))
         x_p.append((a + b) / 2)
         y_p.append(f((a + b) / 2))
     
@@ -45,7 +70,7 @@ def f(x):
     return x**2 + 4*x + 6
 
 a, b = -4, 6
-epsilon = 0.05
+epsilon = 1e-15
 
 min_point = fibonacci_search(f, a, b, epsilon)
 print(f"Минимум функции находится в точке: {min_point:.5f}, значение функции в этой точке: {f(min_point):.5f}")

@@ -23,16 +23,25 @@ def golden_search(f, a, b, tol=1e-15):
 
         if f(c) < f(d):
             b = d
+            print(a)
+            print(b)
             x_p.extend([b])
             y_p.extend([f(b)])
             d = c
-            c = a + b - c
+            print(d)
+            c = a + b - c 
+            print(c)
         else:
             a = c
+            print(a)
+            print(b)
             x_p.extend([a])
-            y_p.extend([f(a)])
+            y_p.extend([f(a)])    
             c = d
+            print(c)
             d = a + b - d
+            print(d)
+
         print(a)
         print(b)
         print(" 1e-3 ")
@@ -51,5 +60,5 @@ def golden_search(f, a, b, tol=1e-15):
     return (b + a) / 2
 def f(x):
     return x**2 + 4*x + 6
-min_p = golden_search(f, -6, 4)
+min_p = golden_search(f, -4, 6)
 print(f"Минимум функции находится в точке: {min_p:.5f}, значение функции в этой точке: {f(min_p):.5f}")
